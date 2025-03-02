@@ -1,0 +1,34 @@
+@font-face {
+font-family: 'Deshret';
+src: url('../font/HoYo-Glyphs/Genshin-Impact/DeshretInscription-Regular.otf');
+}
+
+@font-face {
+font-family: 'Fontaine';
+src: url('../font/HoYo-Glyphs/Genshin-Impact/FontAinee-Regular.otf');
+}
+
+@font-face {
+font-family: 'Inazuma';
+src: url('../font/HoYo-Glyphs/Genshin-Impact/InazumaBrush.otf');
+}
+
+@font-face {
+font-family: 'Chasm';
+src: url('../font/HoYo-Glyphs/Genshin-Impact/KhaenriahSun-Chasm.otf');
+}
+
+@font-face {
+font-family: 'Khaenriah';
+src: url('../font/HoYo-Glyphs/Genshin-Impact/KhaenriahSun-Regular.otf');
+}
+
+@font-face {
+font-family: 'Sumeru';
+src: url('../font/HoYo-Glyphs/Genshin-Impact/SumeruScribe-Regular.otf');
+}
+
+@font-face {
+font-family: 'TeyvatBlack';
+src: url('../font/HoYo-Glyphs/Genshin-Impact/TeyvatBlack-Regular.otf');
+}
