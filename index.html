@@ -28,36 +28,5 @@
     <p>这个站点被我建立，用于存放一些文件。</p>
     <p>访问“功能列表”页面以查看它们。</p>
 
-    <button>生物竞赛的点这里</button>
-    <div id="bio" hidden>
-      <p>下载后将z01.zip改为.z01，点击.zip文件将视频解压缩即可（不会改后缀名的自行百度）</p>
-      <a href="javascript:void(0)" onclick="openLinkA()" rel="nofollow">[细胞生物学]</a>
-      <a href="javascript:void(0)" onclick="openLinkB()" rel="nofollow">[生物化学]</a>
-    </div>
-
   </body>
-
-  <script>
-    // 点击按钮，显示/隐藏生物竞赛链接（<div>元素）
-    document.querySelector("button").addEventListener("click", function () {
-      var bioDiv = document.getElementById("bio");
-      if (bioDiv.hasAttribute("hidden")) {
-        bioDiv.removeAttribute("hidden");
-      }
-    });
-
-    function openLinkA() {
-      // 细胞生物学
-      window.open("https://wwbr.lanzn.com/idhTc2qlwkqd", "_blank", "noopener");
-      window.open("https://wwbr.lanzn.com/ijZlF2qlwyfg", "_blank", "noopener");
-    }
-
-    function openLinkB() {
-      // 生物化学
-      window.open("https://wwbr.lanzn.com/iTocP2qlx48f", "_blank", "noopener");
-      window.open("https://wwbr.lanzn.com/iVxeh2qlxktc", "_blank", "noopener");
-    }
-
-  </script>
-
 </html>
