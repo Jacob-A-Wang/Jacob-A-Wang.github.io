@@ -1,0 +1,23 @@
+/* 未访问的链接 */
+a:link {
+  color: black;
+  text-decoration:none;
+}
+
+/* 已访问的链接 */
+a:visited {
+  color: black;
+  text-decoration:none;
+}
+
+/* 鼠标悬停链接 */
+a:hover {
+  color: blue;
+  text-decoration:none;
+}
+
+/* 已选择的链接 */
+a:active {
+  color: black;
+  text-decoration:none;
+}
