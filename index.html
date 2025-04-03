@@ -30,8 +30,23 @@
     <p>This website was set up in order to storage some files,etc.</p>
     <p>Visit "List" Page to view these files.</p>
 
+    <button>生物竞赛的点这里</button>
+    <div id="bio" hidden>
+      <p>密码：byjxqft（“伯牙绝弦七分糖”）</p>
+      <p>下载后将zip文件解压缩即可（视频格式是TS格式，播放器不支持的请自行百度）</p>
+      <a href="https://wwbr.lanzn.com/b009h22h5e">[我是链接]</a>
+    </div>
+
   </body>
   <script>
     outputChByCh("title", "Jacob-A-Wang GitHub IO Site", 100);
+
+    document.querySelector("button").addEventListener("click", function () {
+       var bioDiv = document.getElementById("bio");
+       if (bioDiv.hasAttribute("hidden")) {
+         bioDiv.removeAttribute("hidden");
+       }
+     });
+    
   </script>
 </html>
