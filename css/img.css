@@ -1,5 +1,0 @@
-img {
-    border: 2px solid #d0d0d0; /* 边框颜色比背景色稍微深一点 */
-    border-radius: 4px; /* 可选：为图片添加圆角 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 可选：添加轻微的阴影效果 */
-}
