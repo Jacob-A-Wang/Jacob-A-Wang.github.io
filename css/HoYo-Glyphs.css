@@ -1,42 +1,226 @@
+/**
+ * HoYo-Glyphs(米哈游的架空文字) CSS 支持
+ * 原项目地址/Original Repo：https://github.com/SpeedyOrc-C/HoYo-Glyphs
+ * CSS样式表制作/CSS File Author：Jacob-A-Wang
+ */
+
 /* 原神Genshin-Impact */
 /* 提瓦特Teyvat */
 @font-face {
 font-family: 'Teyvat';
-src: url('../font/HoYo-Glyphs/Genshin-Impact/TeyvatBlack-Regular.otf');
+src: url('../font/HoYo-Glyphs/Genshin-Impact/Teyvat-Black/otf/TeyvatBlack-Regular.otf');
 }
 
 /* 稻妻Inazuma */
 @font-face {
 font-family: 'Inazuma';
-src: url('../font/HoYo-Glyphs/Genshin-Impact/InazumaBrush.otf');
+src: url('../font/HoYo-Glyphs/Genshin-Impact/Inazuma-Brush/otf/InazumaBrush-Regular.otf');
 }
 
 /* 须弥Sumeru */
 @font-face {
 font-family: 'Sumeru';
-src: url('../font/HoYo-Glyphs/Genshin-Impact/SumeruScribe-Regular.otf');
+src: url('../font/HoYo-Glyphs/Genshin-Impact/Sumeru-Scribe/otf/SumeruScribe-Regular.otf');
 }
 
 /* 赤冠Deshret */
 @font-face {
 font-family: 'Deshret';
-src: url('../font/HoYo-Glyphs/Genshin-Impact/DeshretInscription-Regular.otf');
+src: url('../font/HoYo-Glyphs/Genshin-Impact/Deshret-Inscription/otf/DeshretInscription-Regular.otf');
 }
 
 /* 坎瑞亚Khaenri'ah */
 @font-face {
 font-family: 'Khaenriah';
-src: url('../font/HoYo-Glyphs/Genshin-Impact/KhaenriahSun-Regular.otf');
+src: url('../font/HoYo-Glyphs/Genshin-Impact/Khaenriah-Sun/otf/KhaenriahSun-Regular.otf');
 }
 
 /* 层岩巨渊Chasm */
 @font-face {
 font-family: 'Chasm';
-src: url('../font/HoYo-Glyphs/Genshin-Impact/KhaenriahSun-Chasm.otf');
+src: url('../font/HoYo-Glyphs/Genshin-Impact/Khaenriah-Sun/otf/KhaenriahSun-Chasm.otf');
 }
 
 /* 枫丹Fontaine */
 @font-face {
 font-family: 'Fontaine';
-src: url('../font/HoYo-Glyphs/Genshin-Impact/FontAinee-Regular.otf');
+src: url('../font/HoYo-Glyphs/Genshin-Impact/Font-Ainee/otf/FontAinee-Regular.otf');
+}
+
+
+
+/* 崩坏：星穹铁道Honkai:Star-Rail */
+/* 星穹铁道（贝洛伯格）Star-Rail(Belobog) */
+/* 无衬线Sans */
+@font-face {
+font-family: 'Star-Rail-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-Regular.otf');
+font-weight: normal;
+}
+
+@font-face {
+font-family: 'Star-Rail-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-SemiBold.otf');
+font-weight: 600; /* Semi Bold */
+}
+
+@font-face {
+font-family: 'Star-Rail-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-Bold.otf');
+font-weight: bold;
+}
+
+@font-face {
+font-family: 'Star-Rail-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-Light.otf');
+font-weight: 300; /* Light */
+}
+
+@font-face {
+font-family: 'Star-Rail-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-ExtraLight.otf');
+font-weight: 200; /* Extra Light */
+}
+
+/* 衬线Serif */
+@font-face {
+font-family: 'Star-Rail-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-Regular.otf');
+font-weight: normal;
+}
+
+@font-face {
+font-family: 'Star-Rail-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-SemiBold.otf');
+font-weight: 600; /* Semi Bold */
+}
+
+@font-face {
+font-family: 'Star-Rail-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-Bold.otf');
+font-weight: bold;
+}
+
+@font-face {
+font-family: 'Star-Rail-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-Light.otf');
+font-weight: 300; /* Light */
+}
+
+@font-face {
+font-family: 'Star-Rail-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-ExtraLight.otf');
+font-weight: 200; /* Extra Light */
+}
+
+
+/* 星穹铁道通用文UniversalScript */
+/* （是该字体的别名） */
+/* 无衬线Sans */
+@font-face {
+font-family: 'UniversalScript-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-Regular.otf');
+font-weight: normal;
+}
+
+@font-face {
+font-family: 'UniversalScript-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-SemiBold.otf');
+font-weight: 600; /* Semi Bold */
+}
+
+@font-face {
+font-family: 'UniversalScript-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-Bold.otf');
+font-weight: bold;
+}
+
+@font-face {
+font-family: 'UniversalScript-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-Light.otf');
+font-weight: 300; /* Light */
+}
+
+@font-face {
+font-family: 'UniversalScript-Sans';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Sans-ExtraLight.otf');
+font-weight: 200; /* Extra Light */
+}
+
+/* 衬线Serif */
+@font-face {
+font-family: 'UniversalScript-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-Regular.otf');
+font-weight: normal;
+}
+
+@font-face {
+font-family: 'UniversalScript-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-SemiBold.otf');
+font-weight: 600; /* Semi Bold */
+}
+
+@font-face {
+font-family: 'UniversalScript-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-Bold.otf');
+font-weight: bold;
+}
+
+@font-face {
+font-family: 'UniversalScript-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-Light.otf');
+font-weight: 300; /* Light */
+}
+
+@font-face {
+font-family: 'UniversalScript-Serif';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Star-Rail-Neue/otf/StarRailNeue-Serif-ExtraLight.otf');
+font-weight: 200; /* Extra Light */
+}
+
+
+/* 仙舟Xianzhou */
+@font-face {
+font-family: 'Xianzhou';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Xianzhou-Seal/otf/XianzhouSeal-Regular.otf');
+font-weight: normal;
+}
+
+@font-face {
+font-family: 'Xianzhou';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Xianzhou-Seal/otf/XianzhouSeal-SemiBold.otf');
+font-weight: 600; /* Semi Bold */
+}
+
+@font-face {
+font-family: 'Xianzhou';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Xianzhou-Seal/otf/XianzhouSeal-Bold.otf');
+font-weight: bold;
+}
+
+@font-face {
+font-family: 'Xianzhou';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Xianzhou-Seal/otf/XianzhouSeal-Light.otf');
+font-weight: 300; /* Light */
+}
+
+@font-face {
+font-family: 'Xianzhou';
+src: url('../font/HoYo-Glyphs/Honkai-Star-Rail/Xianzhou-Seal/otf/XianzhouSeal-ExtraLight.otf');
+font-weight: 200; /* Extra Light */
+}
+
+
+
+/* 绝区零ZenlessZoneZero（ZZZ） */
+/* ZZZ-A */
+@font-face {
+font-family: 'ZZZ-A';
+src: url('../font/HoYo-Glyphs/Zenless-Zone-Zero/ZZZ-A/otf/ZZZA-Regular.otf');
+}
+
+/* ZZZ-System */
+@font-face {
+font-family: 'ZZZ-System';
+src: url('../font/HoYo-Glyphs/Zenless-Zone-Zero/ZZZ-System/otf/ZZZSystem-Regular.otf');
 }

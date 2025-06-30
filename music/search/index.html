@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+  <base href="../../">
+  <head>
+    <link rel="stylesheet" href="css/html_and_body.css">
+    <link rel="stylesheet" href="css/a.css">
+    <link rel="stylesheet" href="css/HoYo-Glyphs.css">
+    <script type="text/javascript" src="javascript/ch_by_ch_output.js"></script>
+    <script type="text/javascript" src="javascript/jaw_music_data.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/fuse.js@6.6.2"></script>
+    <script type="text/javascript" src="https://unpkg.com/pinyin-pro@3.18.5/dist/index.js"></script>
+    <script type="text/javascript" src="javascript/jaw_enhanced_search.js"></script>
+    <script type="text/javascript" src="javascript/jaw_music_lib.js"></script>
+    <style>
+      .search-container {
+        margin: 20px 0;
+        padding: 15px;
+      }
+      .search-box {
+        width: 100%;
+        max-width: 500px;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        outline: none;
+      }
+
+      .search-box:focus {
+        border-color: #999999;
+        box-shadow: 0 0 5px rgba(153, 153, 153, 0.3);
+      }
+      .search-results {
+        margin-top: 20px;
+      }
+      .result-item {
+        margin: 15px 0;
+        padding: 15px;
+        background: #f5f5f5;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .result-item:hover {
+        background: #e8e8e8;
+      }
+      .music-title {
+        font-size: 1.2em;
+        margin-bottom: 8px;
+      }
+      .creator-role {
+        color: #666;
+        margin-right: 8px;
+      }
+      .creator-group {
+        margin: 5px 0;
+      }
+      .no-result {
+        text-align: center;
+        padding: 30px;
+        color: #666;
+      }
+      /* 高亮样式 */
+      /* 高亮功能目前被禁用，此样式无效 */
+      /*
+      .highlight {
+        background-color: #FFFF00;
+        font-weight: bold;
+        padding: 0 2px;
+        border-radius: 2px;
+        transition: all 0.2s ease;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+      }
+      */
+
+      /* 搜索历史样式 */
+      /* 搜索历史不会被添加，以下样式无效 */
+      /*
+      .search-history {
+        margin: 10px 0;
+        max-width: 500px;
+      }
+      .search-history-item {
+        display: inline-block;
+        margin: 5px 5px 5px 0;
+        padding: 5px 10px;
+        background: #eee;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .search-history-item:hover {
+        background: #ddd;
+      }
+      */
+
+      /* 搜索建议样式 */
+      /* 搜索建议不会被添加，以下样式无效 */
+      /*
+      .search-suggestions {
+        position: absolute;
+        width: 100%;
+        max-width: 500px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 100;
+        max-height: 300px;
+        overflow-y: auto;
+        display: none;
+      }
+      .search-suggestion-item {
+        padding: 8px 15px;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+      }
+      .search-suggestion-item:hover {
+        background-color: #f5f5f5;
+      }
+      .suggestion-category {
+        padding: 5px 15px;
+        background-color: #f0f0f0;
+        font-weight: bold;
+        font-size: 0.9em;
+        color: #666;
+      }
+      .suggestion-context {
+        font-size: 0.8em;
+        color: #888;
+        margin-top: 2px;
+      }
+      */
+    </style>
+  </head>
+
+  <body>
+    <p id="title"></br></p>
+    <hr>
+    <p>
+      <a href="/">主站/Main Site</a>
+      <a href="list">功能列表/List</a>
+      <a href="about">关于/About</a>
+    </p>
+    <hr>
+    <p>/music/search</p>
+    <hr>
+
+    <div class="search-container">
+      <input type="text"
+             class="search-box"
+             id="searchInput"
+             placeholder="搜索音乐、创作者、相关信息..."
+             autofocus>
+      <!-- 搜索建议和搜索历史不会被添加，以下内容无效 -->
+      <div id="searchSuggestions" class="search-suggestions"></div>
+      <div id="searchHistory" class="search-history"></div>
+      
+      <div id="searchResults" class="search-results"></div>
+    </div>
+
+  </body>
+  <script>
+    outputChByCh("title", "Jacob-A-Wang GitHub IO Site", 100);
+
+    // 声明全局变量
+    let searchEngine;
+    let debounceTimer;
+
+    // 获取搜索输入框
+    const searchInput = document.getElementById('searchInput');
+
+    // DOM加载完成后初始化搜索引擎
+    window.onload = function() {
+      try {
+        // 验证数据是否正确加载
+        if (!JAWMusicData || typeof JAWMusicData !== 'object' || !Array.isArray(JAWMusicData.songs)) {
+          throw new Error('JAWMusicData未正确加载或格式不正确');
+        }
+
+        // 验证并调试JAWMusicData
+        console.log("验证JAWMusicData:", JAWMusicData);
+        console.log("数据包含歌曲数:", JAWMusicData.songs.length);
+
+        // 初始化增强版搜索引擎
+        searchEngine = new JAWEnhancedSearch(JAWMusicData, {
+          threshold: 0.6,
+          maxHistoryItems: 5,
+          maxSuggestions: 5,
+          disableHistory: true
+        });
+
+        // 渲染搜索结果
+        searchEngine.renderResults = function(results, query) {
+          let html = '';
+
+          results.forEach(result => {
+            const item = result.item;
+
+            // 不再高亮显示标题
+            const title = item.titles[0];
+
+            let creatorHtml = '';
+            if (item.creators && item.creators.length > 0) {
+              // 直接显示所有创作者名字，不带标签
+              const creatorNames = item.creators.map(creator => creator.name).join(', ');
+              creatorHtml = `<div class="creator-group">
+    <div>${creatorNames}</div>
+  </div>`;
+            }
+
+            // 获取extraInfo
+            const extraInfo = item.extraInfo || '';
+
+            html += `
+              <div class="result-item" onclick="location.href='${item.path || '#'}'">
+                <div class="music-title" style="display: flex; align-items: center; gap: 8px;">
+                  <div class="primary-title">${title}</div>
+                  ${extraInfo ? `<div class="extra-info" style="color: gray; font-size: 0.8em;">（${extraInfo}）</div>` : ''}
+                </div>
+                ${creatorHtml}
+              </div>
+            `;
+          });
+
+          return html;
+        };
+
+        // 高亮文本中的查询词
+        // 高亮功能目前被禁用，此方法无效
+        searchEngine.highlightText = function(text, query, matches) {
+          if (!text || !query) return text || '';
+
+          // 如果有Fuse.js提供的匹配信息，则使用它进行高亮
+          if (matches && matches.length > 0) {
+            // 创建一个排序后的匹配位置数组
+            const positions = [];
+            matches.forEach(match => {
+              match.indices.forEach(([start, end]) => {
+                positions.push({ start, end: end + 1, highlighted: false });
+              });
+            });
+
+            // 按起始位置排序
+            positions.sort((a, b) => a.start - b.start);
+
+            // 合并重叠的匹配位置
+            const mergedPositions = [];
+            let current = positions[0];
+
+            for (let i = 1; i < positions.length; i++) {
+              if (positions[i].start <= current.end) {
+                // 重叠，合并
+                current.end = Math.max(current.end, positions[i].end);
+              } else {
+                // 不重叠，添加当前并移动
+                mergedPositions.push(current);
+                current = positions[i];
+              }
+            }
+
+            if (current) {
+              mergedPositions.push(current);
+            }
+
+            // 根据匹配位置构建高亮文本
+            let result = '';
+            let lastIndex = 0;
+
+            mergedPositions.forEach(pos => {
+              // 添加非高亮部分
+              result += text.substring(lastIndex, pos.start);
+              // 添加高亮部分
+              result += `<span class="${this.options.highlightClass}">${text.substring(pos.start, pos.end)}</span>`;
+              lastIndex = pos.end;
+            });
+
+            // 添加剩余部分
+            result += text.substring(lastIndex);
+            return result;
+          } else {
+            // 回退到简单的基于关键词的高亮
+            const queryTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 0);
+            if (queryTerms.length === 0) return text;
+
+            let result = text;
+            queryTerms.forEach(term => {
+              const regex = new RegExp(`(${term})`, 'gi');
+              result = result.replace(regex, `<span class="${this.options.highlightClass}">$1</span>`);
+            });
+
+            return result;
+          }
+        };
+
+        // 搜索处理函数
+        function handleSearch(query) {
+          if (!query) {
+            document.getElementById('searchResults').innerHTML = '';
+            document.getElementById('searchSuggestions').innerHTML = '';
+            document.getElementById('searchSuggestions').style.display = 'none';
+            return;
+          }
+
+          // 隐藏搜索建议
+          document.getElementById('searchSuggestions').style.display = 'none';
+
+          // 使用增强版搜索引擎搜索
+          const results = searchEngine.search(query);
+          const resultsContainer = document.getElementById('searchResults');
+
+          if (query.length === 0) {
+            resultsContainer.innerHTML = '';
+            return;
+          }
+
+          if (results.length === 0) {
+            resultsContainer.innerHTML = `
+              <div class="result-item">
+                <div class="no-result">未找到相关音乐</div>
+              </div>
+            `;
+            return;
+          }
+
+          // 渲染高亮结果
+          resultsContainer.innerHTML = searchEngine.renderResults(results, query);
+
+          // 更新搜索历史
+          // updateSearchHistory();
+        }
+
+        // 更新搜索历史UI
+        // function updateSearchHistory() {
+        //   const history = searchEngine.getSearchHistory();
+        //   const historyContainer = document.getElementById('searchHistory');
+        //
+        //   if (history.length === 0) {
+        //     historyContainer.innerHTML = '';
+        //     return;
+        //   }
+        //
+        //   let html = '<div>最近搜索: </div>';
+        //   history.forEach(item => {
+        //     html += `<span class="search-history-item" onclick="useHistoryItem('${item}')">${item}</span>`;
+        //   });
+        //
+        //   historyContainer.innerHTML = html;
+        // }
+
+        // 使用历史记录项
+        // window.useHistoryItem = function(query) {
+        //   document.getElementById('searchInput').value = query;
+        //   handleSearch(query);
+        // }
+
+        // 显示搜索建议
+        function showSuggestions(query) {
+          if (!query || query.length < 2) {
+            document.getElementById('searchSuggestions').innerHTML = '';
+            document.getElementById('searchSuggestions').style.display = 'none';
+            return;
+          }
+
+          const suggestions = searchEngine.getSuggestions(query);
+          const suggestionsContainer = document.getElementById('searchSuggestions');
+
+          if (!suggestions || Object.keys(suggestions).length === 0 || 
+              (!suggestions.titles.length && !suggestions.creators.length && !suggestions.history.length)) {
+            suggestionsContainer.innerHTML = '';
+            suggestionsContainer.style.display = 'none';
+            return;
+          }
+
+          let html = '';
+
+          // 添加标题建议
+          if (suggestions.titles && suggestions.titles.length > 0) {
+            html += '<div class="suggestion-category">歌曲标题</div>';
+            suggestions.titles.forEach(item => {
+              const highlightedText = searchEngine.highlightText(escapeHtml(item.text), query, item.matches);
+              html += `<div class="search-suggestion-item" data-value="${escapeHtml(item.text)}" data-type="title">${highlightedText}</div>`;
+            });
+          }
+
+          // 添加创作者建议
+          if (suggestions.creators && suggestions.creators.length > 0) {
+            html += '<div class="suggestion-category">创作者</div>';
+            suggestions.creators.forEach(item => {
+              const highlightedText = searchEngine.highlightText(escapeHtml(item.text), query, item.matches);
+              let contextInfo = '';
+              if (item.songTitle) {
+                contextInfo = `<div class="suggestion-context">${escapeHtml(item.songTitle)}</div>`;
+              } else if (item.context) {
+                contextInfo = `<div class="suggestion-context">${escapeHtml(item.context)}</div>`;
+              }
+              html += `<div class="search-suggestion-item" data-value="${escapeHtml(item.text)}" data-type="creator">${highlightedText}${contextInfo}</div>`;
+            });
+          }
+
+          // 添加搜索历史建议
+          if (suggestions.history && suggestions.history.length > 0) {
+            html += '<div class="suggestion-category">搜索历史</div>';
+            suggestions.history.forEach(item => {
+              const highlightedText = searchEngine.highlightText(escapeHtml(item.text), query, item.matches);
+              html += `<div class="search-suggestion-item" data-value="${escapeHtml(item.text)}" data-type="history">${highlightedText}</div>`;
+            });
+          }
+
+          suggestionsContainer.innerHTML = html;
+          suggestionsContainer.style.display = 'block';
+
+          // 添加事件监听器
+          const suggestionItems = document.querySelectorAll('.search-suggestion-item');
+          suggestionItems.forEach(item => {
+            item.addEventListener('click', () => {
+              useSuggestion(item.getAttribute('data-value'));
+            });
+          });
+        }
+
+        // 使用建议
+        function useSuggestion(suggestion) {
+          document.getElementById('searchInput').value = suggestion;
+          handleSearch(suggestion);
+          document.getElementById('searchSuggestions').style.display = 'none';
+        }
+
+        // HTML转义函数防止XSS攻击
+        function escapeHtml(text) {
+          if (!text) return '';
+          return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
+
+        // 添加搜索输入监听
+        searchInput.addEventListener('input', (e) => {
+          const query = e.target.value.trim();
+
+          // 显示搜索建议
+          showSuggestions(query);
+
+          // 延迟执行搜索
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => {
+            handleSearch(query);
+          }, 300);
+        });
+
+        // 当点击页面其他地方时，隐藏建议
+        document.addEventListener('click', function(event) {
+          const suggestionsContainer = document.getElementById('searchSuggestions');
+          const searchInput = document.getElementById('searchInput');
+
+          if (event.target !== searchInput && event.target !== suggestionsContainer) {
+            suggestionsContainer.style.display = 'none';
+          }
+        });
+
+        // 初始化搜索历史
+        // updateSearchHistory();
+
+        // 页面加载时初始化搜索历史
+        window.addEventListener('load', () => {
+          // updateSearchHistory();
+        });
+
+      } catch (error) {
+        console.error('搜索引擎初始化失败:', error);
+        document.getElementById('searchResults').innerHTML = `
+          <div class="result-item">
+            <div class="no-result">搜索功能初始化失败: ${error.message}</div>
+          </div>
+        `;
+      }
+    };
+  </script>
+</html>

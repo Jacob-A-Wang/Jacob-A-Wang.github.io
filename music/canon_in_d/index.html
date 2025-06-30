@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
-
   <base href="../../">
   <head>
     <link rel="stylesheet" href="css/html_and_body.css">
     <link rel="stylesheet" href="css/a.css">
+    <link rel="stylesheet" href="css/audio.css">
     <link rel="stylesheet" href="css/HoYo-Glyphs.css">
+    <link rel="stylesheet" href="css/music_page.css">
     <script type="text/javascript" src="javascript/ch_by_ch_output.js"></script>
+    <script type="text/javascript" src="javascript/jaw_music_data.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/fuse.js@6.6.2"></script>
+    <script type="text/javascript" src="javascript/jaw_music_lib.js"></script>
+    <script type="text/javascript" src="javascript/display_song_info.js"></script>
+    <script type="text/javascript" src="javascript/create_audio_player.js"></script>
   </head>
 
   <body>
@@ -16,20 +22,28 @@
       <a href="/">主站/Main Site</a>
       <a href="list">功能列表/List</a>
       <a href="about">关于/About</a>
+      |
+      <a href="music/search">搜索音乐/Search Music</a>
     </p>
     <hr>
+
     <p>/music/Canon in D</p>
     <hr>
 
-    <audio controls height="100" width="100">
+    <div class="music-info">
+      <div id="songInfo">
+        <!-- 音乐信息将通过JavaScript动态填充 -->
+      </div>
 
-      <source src="file_storage/music/卡农（弦乐四重奏） - 中国爱乐乐团,瑞鸣音乐.mp3" type="audio/mpeg">
-
-      <embed height="50" width="100" src="file_storage/music/卡农（弦乐四重奏） - 中国爱乐乐团,瑞鸣音乐.mp3">
-    </audio>
+      <div id="audio-container"></div>
+    </div>
 
   </body>
   <script>
     outputChByCh("title", "Jacob-A-Wang GitHub IO Site", 100);
+
+    const musicLib = new JAWMusicLib(JAWMusicData);
+    displaySongInfo(musicLib.getSongInfo('canon_in_d'));
+    createAudioPlayer(musicLib.getAudioPath('canon_in_d'));
   </script>
 </html>

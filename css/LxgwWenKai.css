@@ -1,0 +1,43 @@
+/**
+ * 霞鹜文楷 CSS 支持
+ * 原项目地址/Original Repo：https://github.com/lxgw/LxgwWenKai
+ * CSS样式表制作/CSS File Author：Jacob-A-Wang
+ */
+
+/* 霞鹜文楷LxgwWenKai */
+@font-face {
+    font-family: 'LXGW WenKai';
+    src: url('../font/LxgwWenKai/lxgw-wenkai-v1.520/LXGWWenKai-Regular.ttf');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'LXGW WenKai';
+    src: url('../font/LxgwWenKai/lxgw-wenkai-v1.520/LXGWWenKai-Light.ttf');
+    font-weight: 300; /* Light */
+}
+
+@font-face {
+    font-family: 'LXGW WenKai';
+    src: url('../font/LxgwWenKai/lxgw-wenkai-v1.520/LXGWWenKai-Medium.ttf');
+    font-weight: 500; /* Medium */
+}
+
+/* 等宽Mono */
+@font-face {
+    font-family: 'LXGW WenKai Mono';
+    src: url('../font/LxgwWenKai/lxgw-wenkai-v1.520/LXGWWenKaiMono-Regular.ttf');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'LXGW WenKai Mono';
+    src: url('../font/LxgwWenKai/lxgw-wenkai-v1.520/LXGWWenKaiMono-Light.ttf');
+    font-weight: 300; /* Light */
+}
+
+@font-face {
+    font-family: 'LXGW WenKai Mono';
+    src: url('../font/LxgwWenKai/lxgw-wenkai-v1.520/LXGWWenKaiMono-Medium.ttf');
+    font-weight: 500; /* Medium */
+}
