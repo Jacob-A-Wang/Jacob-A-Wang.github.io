@@ -107,6 +107,30 @@ const JAWMusicData = {
       ],
       "path": "/music/da_capo_instrumental/",
       "audioPath": "https://music.163.com/song/media/outer/url?id=2026571661.mp3"
+    },
+    {
+      "id": "before_their_deaths",
+      "titles": [
+        "英雄未死之前 Before Their Deaths"
+      ],
+      "extraInfo": "崩坏：星穹铁道3.5版本PV",
+      "creators": [
+        {
+          "name": "HOYO-MiX"
+        }
+      ],
+      "relatedInfo": [
+        "崩坏：星穹铁道",
+        "翁法罗斯",
+        "PV",
+        "动画短片配乐",
+        "Honkai: Star Rail",
+        "Amphoreus",
+        "Instrumental",
+        "纯音乐"
+      ],
+      "path": "/music/before_their_deaths/",
+      "audioPath": "/file_storage/music/英雄未死之前 Before Their Deaths - HOYO-MiX.mp3"
     }
   ]
 };
